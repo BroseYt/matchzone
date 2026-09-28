@@ -1,0 +1,106 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function acceptedFanTerms() {
+      return signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid))
+          .data.fanTermsVersion == 1;
+    }
+
+    match /users/{userId} {
+      allow read, create, update, delete: if isOwner(userId);
+
+      match /blocked/{blockedUserId} {
+        allow read, create, update, delete: if isOwner(userId);
+      }
+    }
+
+    match /watchRooms/{matchId}/messages/{messageId} {
+      allow read: if signedIn();
+      allow create: if acceptedFanTerms()
+        && request.resource.data.keys().hasOnly([
+          "text",
+          "userId",
+          "status",
+          "createdAt"
+        ])
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 240
+        && request.resource.data.status == "visible"
+        && request.resource.data.createdAt == request.time;
+      allow delete: if signedIn()
+        && resource.data.userId == request.auth.uid;
+      allow update: if false;
+    }
+
+    match /watchRooms/{matchId}/pollVotes/{userId} {
+      allow read: if signedIn();
+      allow create, update: if isOwner(userId)
+        && acceptedFanTerms()
+        && request.resource.data.keys().hasOnly([
+          "userId",
+          "choice",
+          "updatedAt"
+        ])
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.choice in ["home", "draw", "away"]
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if isOwner(userId);
+    }
+
+    match /reports/{reportId} {
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly([
+          "type",
+          "matchId",
+          "messageId",
+          "reportedUserId",
+          "reporterId",
+          "reason",
+          "status",
+          "createdAt"
+        ])
+        && request.resource.data.type == "fan_message"
+        && request.resource.data.reporterId == request.auth.uid
+        && request.resource.data.reportedUserId != request.auth.uid
+        && request.resource.data.matchId is string
+        && request.resource.data.messageId is string
+        && request.resource.data.reason is string
+        && request.resource.data.reason.size() > 0
+        && request.resource.data.reason.size() <= 120
+        && request.resource.data.status == "new"
+        && request.resource.data.createdAt == request.time;
+      allow read: if signedIn()
+        && resource.data.reporterId == request.auth.uid;
+      allow update: if false;
+      allow delete: if signedIn()
+        && resource.data.reporterId == request.auth.uid;
+    }
+
+    match /feedback/{feedbackId} {
+      allow create: if request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 2000
+        && (
+          request.resource.data.userId == null
+          || (signedIn() && request.resource.data.userId == request.auth.uid)
+        );
+      allow read: if signedIn()
+        && resource.data.userId == request.auth.uid;
+      allow update: if false;
+      allow delete: if signedIn()
+        && resource.data.userId == request.auth.uid;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+name = "matchzone-football-api"
+main = "worker.js"
+compatibility_date = "2026-06-08"
+workers_dev = true
+preview_urls = false
+
+[[kv_namespaces]]
+binding = "ALERTS"
+id = "9882e185c05e44d49c9e0a3c13d39d08"
+
+[triggers]
+crons = ["* * * * *"]
+
+[observability]
+enabled = true

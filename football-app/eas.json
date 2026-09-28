@@ -1,0 +1,30 @@
+{
+  "cli": {
+    "version": ">= 19.0.8",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_FOOTBALL_API_PROXY_URL": "https://matchzone-football-api.matchzone-football-hub.workers.dev"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_FOOTBALL_API_PROXY_URL": "https://matchzone-football-api.matchzone-football-hub.workers.dev"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_FOOTBALL_API_PROXY_URL": "https://matchzone-football-api.matchzone-football-hub.workers.dev"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
