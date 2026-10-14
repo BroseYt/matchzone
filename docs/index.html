@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d18">
+  <meta name="description" content="MatchZone brings football scores, fixtures, news and fan discussions together in one place.">
+  <title>MatchZone | Football Lives Here</title>
+
+  <style>
+    :root {
+      --bg: #080d18;
+      --panel: #101a2b;
+      --green: #42e695;
+      --text: #f4f7fc;
+      --muted: #a5b1c5;
+      --border: rgba(255,255,255,.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(8,13,24,.94);
+    }
+
+    nav {
+      min-height: 76px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: -.8px;
+    }
+
+    .brand span { color: var(--green); }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .nav-links a:hover, footer a:hover { color: var(--green); }
+
+    .hero {
+      padding: 100px 0 90px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(66,230,149,.13), transparent 60%),
+        var(--bg);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      border: 1px solid rgba(66,230,149,.35);
+      color: var(--green);
+      border-radius: 50px;
+      padding: 6px 14px;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.7rem);
+      line-height: 1.04;
+      letter-spacing: -3px;
+      max-width: 850px;
+      margin: 0 auto 24px;
+    }
+
+    h1 span { color: var(--green); }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 800;
+      border: 1px solid var(--border);
+      transition: transform .2s, background .2s;
+    }
+
+    .button:hover { transform: translateY(-3px); }
+
+    .primary {
+      background: var(--green);
+      color: #07120c;
+      border-color: var(--green);
+    }
+
+    .secondary { background: rgba(255,255,255,.04); }
+
+    section { padding: 68px 0; }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 34px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      margin-bottom: 10px;
+    }
+
+    .section-heading p { color: var(--muted); }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      padding: 27px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      border-color: rgba(66,230,149,.45);
+    }
+
+    .feature .icon {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .feature h3 { margin-bottom: 8px; }
+
+    .feature p {
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .community {
+      text-align: center;
+      background: linear-gradient(135deg, #101a2b, #0c1722);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 48px 24px;
+    }
+
+    .community p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: 12px auto 0;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    @media (max-width: 700px) {
+      .hero { padding: 76px 0 65px; }
+      h1 { letter-spacing: -1.5px; }
+      .features { grid-template-columns: 1fr; }
+      nav { align-items: flex-start; padding: 18px 0; flex-direction: column; }
+      .nav-links { gap: 14px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="container">
+      <a class="brand" href="./index.html">MATCH<span>ZONE</span> ⚽</a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#community">Community</a>
+        <a href="./privacy.html">Privacy</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Your football world</div>
+        <h1>Every match.<br>Every moment.<br><span>One zone.</span></h1>
+        <p>
+          Stay connected to the game with football scores, fixtures,
+          news and fan conversations — all in one place.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#features">Explore MatchZone</a>
+          <a class="button secondary" href="./privacy.html">Privacy &amp; safety</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Everything football</h2>
+          <p>Follow the action and stay close to the conversation.</p>
+        </div>
+
+        <div class="features">
+          <article class="feature">
+            <div class="icon">⚽</div>
+            <h3>Scores &amp; Fixtures</h3>
+            <p>Keep up with match results, upcoming fixtures and the football action that matters to you.</p>
+          </article>
+
+          <article class="feature">
+            <div class="icon">📰</div>
+            <h3>Football News</h3>
+            <p>Catch up on football headlines and stories from sports news sources.</p>
+          </article>
+
+          <article class="feature">
+            <div class="icon">💬</div>
+            <h3>Fan Rooms</h3>
+            <p>Join football conversations, share your opinions and connect with fellow fans.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="community">
+      <div class="container">
+        <div class="community">
+          <div class="eyebrow">Made for the fans</div>
+          <h2>Football is better together.</h2>
+          <p>
+            From kick-off to the final whistle, MatchZone brings
+            the matchday experience and fan community closer.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <strong class="brand">MATCH<span>ZONE</span></strong>
+        <p>Football lives here. © <span id="year"></span> MatchZone.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="./privacy.html">Privacy Policy</a>
+        <a href="./terms.html">Terms of Service</a>
+        <a href="./delete-account.html">Delete Account</a>
+        <a href="mailto:brosetechytb@gmail.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+</body>
+</html>
